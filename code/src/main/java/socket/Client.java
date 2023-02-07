@@ -1,5 +1,10 @@
 package socket;
 
+import formatter.Serializer;
+import generator.GenerateOrder;
+import model.Orders;
+import utils.DatasetSize;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,12 +17,14 @@ public class Client {
         PrintWriter out;
         BufferedReader in;
 
-        clientSocket = new Socket("ip", 0);
+        clientSocket = new Socket("127.0.0.1", 8081);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        out.println("body");
+        Orders orders = new GenerateOrder().createOrders(DatasetSize.BIG);
+        out.println(new Serializer().json(orders));
         String resp = in.readLine();
+        System.out.println(resp);
 
         in.close();
         out.close();
