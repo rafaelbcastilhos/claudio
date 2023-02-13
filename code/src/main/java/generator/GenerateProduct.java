@@ -1,6 +1,7 @@
 package generator;
 
 import model.Product;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,8 @@ public class GenerateProduct {
                 1169.99,
                 new Random().nextInt(10),
                 "Tecnologia",
-                5
+                5,
+                false
         );
 
         Product product2 = new Product(
@@ -25,7 +27,8 @@ public class GenerateProduct {
                 2149.99,
                 new Random().nextInt(10),
                 "Tecnologia",
-                4
+                4,
+                true
         );
 
         Product product3 = new Product(
@@ -33,7 +36,8 @@ public class GenerateProduct {
                 199.99,
                 new Random().nextInt(10),
                 "Tecnologia",
-                5
+                5,
+                true
         );
 
         Product product4 = new Product(
@@ -41,7 +45,8 @@ public class GenerateProduct {
                 4599.99,
                 new Random().nextInt(10),
                 "Tecnologia",
-                3
+                3,
+                false
         );
 
         Product product5 = new Product(
@@ -49,7 +54,8 @@ public class GenerateProduct {
                 56.99,
                 new Random().nextInt(10),
                 "Livros",
-                5
+                5,
+                false
         );
 
         Product product6 = new Product(
@@ -57,7 +63,8 @@ public class GenerateProduct {
                 49.99,
                 new Random().nextInt(10),
                 "Livros",
-                4
+                4,
+                true
         );
 
         Product product7 = new Product(
@@ -65,7 +72,8 @@ public class GenerateProduct {
                 74.90,
                 new Random().nextInt(10),
                 "Livros",
-                3
+                3,
+                false
         );
 
         Product product8 = new Product(
@@ -73,7 +81,8 @@ public class GenerateProduct {
                 69.90,
                 new Random().nextInt(10),
                 "Higiene",
-                4
+                4,
+                false
         );
 
         Product product9 = new Product(
@@ -81,7 +90,8 @@ public class GenerateProduct {
                 99.90,
                 new Random().nextInt(10),
                 "Cozinha",
-                50
+                50,
+                true
         );
 
         Product product10 = new Product(
@@ -89,10 +99,11 @@ public class GenerateProduct {
                 87.52,
                 new Random().nextInt(10),
                 "Cozinha",
-                4
+                4,
+                false
         );
 
-        return List.of(product1, product2, product3, product4, product5, product6,
+        return Arrays.asList(product1, product2, product3, product4, product5, product6,
                 product7, product8, product9, product10);
     }
 }

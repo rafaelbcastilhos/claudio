@@ -4,8 +4,7 @@ import model.Order;
 import model.Orders;
 import model.Product;
 import model.Products;
-
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -36,8 +35,8 @@ public class GenerateOrder {
         return orders;
     }
 
-    private String getDeliveryMethod(int index){
-        List<String> list = List.of("Sedex", "PAC", "Express", "Retira", "Dropoff");
+    private char getDeliveryMethod(int index){
+        List<Character> list = Arrays.asList('S', 'P', 'E', 'R', 'D');
         return list.get(index);
     }
 }

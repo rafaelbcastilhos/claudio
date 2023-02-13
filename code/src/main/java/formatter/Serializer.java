@@ -7,19 +7,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.gson.Gson;
 import model.Orders;
+import org.msgpack.jackson.dataformat.MessagePackFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import org.msgpack.core.MessagePack;
-import org.msgpack.jackson.dataformat.MessagePackFactory;
 
 public class Serializer {
     public String json(Orders orders){
         Date init = new Date();
         String gson = new Gson().toJson(orders);
         Date end = new Date();
-        System.out.println(end.getTime()-init.getTime() + " - " + gson.getBytes().length);
         return gson;
     }
 

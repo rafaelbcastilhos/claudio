@@ -6,11 +6,11 @@ public class Order {
     private Person destinator;
     private Products products;
     private Double totalPrice;
-    private String deliveryMethod;
+    private char deliveryMethod;
 
     public Order() {}
 
-    public Order(Person shipper, Person transporter, Person destinator, Products products, Double totalPrice, String deliveryMethod) {
+    public Order(Person shipper, Person transporter, Person destinator, Products products, Double totalPrice, char deliveryMethod) {
         this.shipper = shipper;
         this.transporter = transporter;
         this.destinator = destinator;
@@ -59,11 +59,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public String getDeliveryMethod() {
+    public char getDeliveryMethod() {
         return deliveryMethod;
     }
 
-    public void setDeliveryMethod(String deliveryMethod) {
+    public void setDeliveryMethod(char deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
     }
 }

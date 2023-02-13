@@ -6,15 +6,17 @@ public class Product {
     private Integer quantity;
     private String category;
     private Integer rating;
+    private Boolean onSale;
 
     public Product() {}
 
-    public Product(String description, Double price, Integer quantity, String category, Integer rating) {
+    public Product(String description, Double price, Integer quantity, String category, Integer rating, Boolean onSale) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
         this.rating = rating;
+        this.onSale = onSale;
     }
 
     public String getDescription() {
@@ -55,5 +57,13 @@ public class Product {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public Boolean getOnSale() {
+        return onSale;
+    }
+
+    public void setOnSale(Boolean onSale) {
+        this.onSale = onSale;
     }
 }

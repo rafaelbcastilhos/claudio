@@ -1,33 +1,54 @@
 package rest;
 
+import com.opencsv.CSVWriter;
 import com.squareup.okhttp.*;
 import formatter.Serializer;
 import generator.GenerateOrder;
 import model.Orders;
 import utils.DatasetSize;
-
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
 public class Client {
     public static void main(String[] args) throws IOException {
-//        String method = args[0];
-//        int size = Integer.parseInt(args[1]);
+        String type = args[0];
+        String size = args[1];
+        String fileName = "client_".concat(type).concat("_").concat(size).concat(".csv");
+        CSVWriter writer = new CSVWriter(new FileWriter(fileName));
+        String[] header = {"bytes_serialize", "time_serialize", "time_request"};
+        writer.writeNext(header);
+
         Orders orders = new GenerateOrder().createOrders(DatasetSize.SMALL);
-//        if (method.equals("INTEGER")) {}
-//        if (method.equals("DOUBLE")) {}
-//        if (method.equals("STRING")) {}
-//        if (method.equals("STRUCT")) {}
+
         OkHttpClient ok = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody requestBody = RequestBody.create(mediaType, new Serializer().json(orders));
-        Request request = new Request.Builder()
-                .url("http://localhost:8080/")
-                .method("POST", requestBody)
-                .build();
+        for (int i = 0; i < 10; i++) {
+            Date initSerialize = new Date();
+            String serialized = new Serializer().json(orders);
+            Date endSerialize = new Date();
+            long bytesSerialize = serialized.getBytes().length;
 
-        System.out.println("request: " + request);
+            RequestBody requestBody = RequestBody.create(mediaType, serialized);
+            Request request = new Request.Builder()
+                    .url("http://localhost:8080/")
+                    .method("POST", requestBody)
+                    .build();
 
-        Response response = ok.newCall(request).execute();
-        System.out.println("response: " + response.body().string());
+            System.out.println("request: " + request);
+
+            Date initRequest = new Date();
+            Response response = ok.newCall(request).execute();
+            Date endRequest = new Date();
+            long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
+            long timeRequest = endRequest.getTime() - initRequest.getTime();
+            System.out.println("response: " + response.body().string());
+            String[] row = {
+                    String.valueOf(bytesSerialize),
+                    String.valueOf(timeSerialize),
+                    String.valueOf(timeRequest)
+            };
+            writer.writeNext(row);
+        }
     }
 }

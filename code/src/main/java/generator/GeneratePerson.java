@@ -2,6 +2,8 @@ package generator;
 
 import model.Address;
 import model.Person;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class GeneratePerson {
@@ -192,7 +194,7 @@ public class GeneratePerson {
                 )
         );
 
-        return List.of(person1, person2, person3, person4, person5, person6,
+        return Arrays.asList(person1, person2, person3, person4, person5, person6,
                 person7, person8, person9, person10);
     }
 
@@ -367,7 +369,7 @@ public class GeneratePerson {
                 )
         );
 
-        return List.of(person1, person2, person3, person4, person5, person6,
+        return Arrays.asList(person1, person2, person3, person4, person5, person6,
                 person7, person8, person9, person10);
     }
 
@@ -537,7 +539,7 @@ public class GeneratePerson {
                 )
         );
 
-        return List.of(person1, person2, person3, person4, person5, person6,
+        return Arrays.asList(person1, person2, person3, person4, person5, person6,
                 person7, person8, person9, person10);
     }
 }
