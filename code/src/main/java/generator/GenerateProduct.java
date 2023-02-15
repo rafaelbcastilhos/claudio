@@ -90,7 +90,7 @@ public class GenerateProduct {
                 99.90,
                 new Random().nextInt(10),
                 "Cozinha",
-                50,
+                5,
                 true
         );
 

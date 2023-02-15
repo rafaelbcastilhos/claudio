@@ -2,10 +2,9 @@ package rest;
 
 import com.opencsv.CSVWriter;
 import com.squareup.okhttp.*;
-import formatter.Serializer;
-import generator.GenerateOrder;
 import model.Orders;
-import utils.DatasetSize;
+import utils.DatasetMethod;
+import utils.DatasetType;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
@@ -14,25 +13,42 @@ public class Client {
     public static void main(String[] args) throws IOException {
         String type = args[0];
         String size = args[1];
+        String method = args[2];
         String fileName = "client_".concat(type).concat("_").concat(size).concat(".csv");
         CSVWriter writer = new CSVWriter(new FileWriter(fileName));
         String[] header = {"bytes_serialize", "time_serialize", "time_request"};
         writer.writeNext(header);
 
-        Orders orders = new GenerateOrder().createOrders(DatasetSize.SMALL);
+        Orders obj = new DatasetType().getType(type, size);
 
         OkHttpClient ok = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
         for (int i = 0; i < 10; i++) {
-            Date initSerialize = new Date();
-            String serialized = new Serializer().json(orders);
-            Date endSerialize = new Date();
-            long bytesSerialize = serialized.getBytes().length;
+            RequestBody requestBody = null;
+            Date initSerialize = null;
+            Date endSerialize = null;
+            long bytesSerialize = 0;
+            if (method.equals("JSON") || method.equals("XML")){
+                initSerialize = new Date();
+                String serialized = new DatasetMethod().serializeString(method, obj).toString();
+                System.out.println("serialize: " + serialized);
+                endSerialize = new Date();
+                bytesSerialize = serialized.getBytes().length;
+                requestBody = RequestBody.create(mediaType, serialized);
+            }
 
-            RequestBody requestBody = RequestBody.create(mediaType, serialized);
+            if (method.equals("MSGPACK") || method.equals("KRYO")){
+                initSerialize = new Date();
+                byte[] serialized = new DatasetMethod().serializeBytes(method, obj);
+                System.out.println("serialize: " + serialized);
+                endSerialize = new Date();
+                bytesSerialize = serialized.length;
+                requestBody = RequestBody.create(mediaType, serialized);
+            }
             Request request = new Request.Builder()
                     .url("http://localhost:8080/")
                     .method("POST", requestBody)
+                    .addHeader("method", method)
                     .build();
 
             System.out.println("request: " + request);
