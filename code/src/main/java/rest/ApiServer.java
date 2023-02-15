@@ -1,6 +1,7 @@
 package rest;
 
-import com.opencsv.CSVWriter;
+import database.Item;
+import database.Repository;
 import model.Orders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import utils.DatasetMethod;
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -19,11 +19,8 @@ public class ApiServer {
     @ResponseBody
     public Object root(HttpServletRequest request) throws IOException {
         String method = request.getHeader("method");
+        String id = request.getHeader("id");
         System.out.println("method: " + method);
-        String fileName = "server_".concat(".csv");
-        CSVWriter writer = new CSVWriter(new FileWriter(fileName, true));
-        String[] header = {"time_deserialize"};
-        writer.writeNext(header);
 
         String bodyString = null;
         byte[] bodyBytes = null;
@@ -46,10 +43,10 @@ public class ApiServer {
         }
         long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
-        String[] row = {
-                String.valueOf(timeDeserialize)
-        };
-        writer.writeNext(row);
+        Item item = Repository.getInstance().get(id);
+        item.setTimeDeserialize(timeDeserialize);
+        Repository.getInstance().update(item);
+
         return deserialized;
     }
 }

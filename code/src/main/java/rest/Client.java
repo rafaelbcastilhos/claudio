@@ -1,23 +1,22 @@
 package rest;
 
-import com.opencsv.CSVWriter;
 import com.squareup.okhttp.*;
+import database.Item;
+import database.Repository;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.DatasetType;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.UUID;
 
 public class Client {
     public static void main(String[] args) throws IOException {
         String type = args[0];
         String size = args[1];
         String method = args[2];
-        String fileName = "client_".concat(type).concat("_").concat(size).concat(".csv");
-        CSVWriter writer = new CSVWriter(new FileWriter(fileName));
-        String[] header = {"bytes_serialize", "time_serialize", "time_request"};
-        writer.writeNext(header);
+        String id = UUID.randomUUID().toString();
 
         Orders obj = new DatasetType().getType(type, size);
 
@@ -40,7 +39,7 @@ public class Client {
             if (method.equals("MSGPACK") || method.equals("KRYO")){
                 initSerialize = new Date();
                 byte[] serialized = new DatasetMethod().serializeBytes(method, obj);
-                System.out.println("serialize: " + serialized);
+                System.out.println("serialize: " + Arrays.toString(serialized));
                 endSerialize = new Date();
                 bytesSerialize = serialized.length;
                 requestBody = RequestBody.create(mediaType, serialized);
@@ -49,6 +48,7 @@ public class Client {
                     .url("http://localhost:8080/")
                     .method("POST", requestBody)
                     .addHeader("method", method)
+                    .addHeader("id", id)
                     .build();
 
             System.out.println("request: " + request);
@@ -59,12 +59,16 @@ public class Client {
             long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
             long timeRequest = endRequest.getTime() - initRequest.getTime();
             System.out.println("response: " + response.body().string());
-            String[] row = {
-                    String.valueOf(bytesSerialize),
-                    String.valueOf(timeSerialize),
-                    String.valueOf(timeRequest)
-            };
-            writer.writeNext(row);
+
+            Repository.getInstance().create(new Item(
+                    id,
+                    type,
+                    size,
+                    method,
+                    bytesSerialize,
+                    timeSerialize,
+                    timeRequest
+            ));
         }
     }
 }
