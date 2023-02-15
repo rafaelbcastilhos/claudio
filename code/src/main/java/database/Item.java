@@ -1,4 +1,4 @@
-package model;
+package database;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -9,14 +9,14 @@ public class Item {
     String type;
     String size;
     String method;
-    Integer bytesSerialize;
-    Integer timeSerialize;
-    Integer timeRequest;
-    Integer timeDeserialize;
+    Long bytesSerialize;
+    Long timeSerialize;
+    Long timeRequest;
+    Long timeDeserialize;
 
     public Item() {}
 
-    public Item(String id, String type, String size, String method, Integer bytesSerialize, Integer timeSerialize, Integer timeRequest) {
+    public Item(String id, String type, String size, String method, Long bytesSerialize, Long timeSerialize, Long timeRequest) {
         this.id = id;
         this.type = type;
         this.size = size;
@@ -59,35 +59,35 @@ public class Item {
         this.method = method;
     }
 
-    public Integer getBytesSerialize() {
+    public Long getBytesSerialize() {
         return bytesSerialize;
     }
 
-    public void setBytesSerialize(Integer bytesSerialize) {
+    public void setBytesSerialize(Long bytesSerialize) {
         this.bytesSerialize = bytesSerialize;
     }
 
-    public Integer getTimeSerialize() {
+    public Long getTimeSerialize() {
         return timeSerialize;
     }
 
-    public void setTimeSerialize(Integer timeSerialize) {
+    public void setTimeSerialize(Long timeSerialize) {
         this.timeSerialize = timeSerialize;
     }
 
-    public Integer getTimeRequest() {
+    public Long getTimeRequest() {
         return timeRequest;
     }
 
-    public void setTimeRequest(Integer timeRequest) {
+    public void setTimeRequest(Long timeRequest) {
         this.timeRequest = timeRequest;
     }
 
-    public Integer getTimeDeserialize() {
+    public Long getTimeDeserialize() {
         return timeDeserialize;
     }
 
-    public void setTimeDeserialize(Integer timeDeserialize) {
+    public void setTimeDeserialize(Long timeDeserialize) {
         this.timeDeserialize = timeDeserialize;
     }
 }
