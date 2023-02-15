@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Random;
 
 public class GenerateProduct {
-    private final List<Product> products = createProducts();
+    private final List<Product> products = generate();
 
     public List<Product> getProducts() {
         return products;
     }
 
-    private List<Product> createProducts(){
+    private List<Product> generate(){
         Product product1 = new Product(
                 "Processador AMD Ryzen 5 5600X, 3.7GHz (4.6GHz Max Turbo), Cache 35MB, 6 Núcleos, 12 Threads",
                 1169.99,

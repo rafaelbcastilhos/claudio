@@ -2,12 +2,11 @@ package generator;
 
 import model.Address;
 import model.Person;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class GeneratePerson {
-    private final List<Person> shippers = createShippers();
+    private final List<Person> shippers = generate();
     private final List<Person> transporters = createTransporters();
     private final List<Person> destinators = createDestinators();
 
@@ -23,7 +22,7 @@ public class GeneratePerson {
         return destinators;
     }
 
-    private List<Person> createShippers(){
+    private List<Person> generate(){
         Person person1 = new Person(
                 "Filipe e Marlene Advocacia Ltda",
                 "presidencia@filipeemarleneadvocacialtda.com.br",

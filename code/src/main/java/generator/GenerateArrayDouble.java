@@ -5,14 +5,14 @@ import model.Product;
 import java.util.List;
 import java.util.Random;
 
-public class GenerateArrayInteger implements Generator {
+public class GenerateArrayDouble implements Generator {
     public Orders generate(int quantity){
         List<Product> prods = new GenerateProduct().getProducts();
-        Orders ints = new Orders();
+        Orders doubles = new Orders();
 
         for (int i = 0; i < quantity; i++)
-            ints.addOrder(prods.get(new Random().nextInt(10)).getRating());
+            doubles.addOrder(prods.get(new Random().nextInt(10)).getPrice());
 
-        return ints;
+        return doubles;
     }
 }

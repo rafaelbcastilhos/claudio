@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class GenerateOrder {
-    public Orders createOrders(int quantity){
+public class GenerateOrder implements Generator {
+    public Orders generate(int quantity){
         Orders orders = new Orders();
         Products products = new Products();
 
@@ -35,7 +35,7 @@ public class GenerateOrder {
         return orders;
     }
 
-    private char getDeliveryMethod(int index){
+    public char getDeliveryMethod(int index){
         List<Character> list = Arrays.asList('S', 'P', 'E', 'R', 'D');
         return list.get(index);
     }
