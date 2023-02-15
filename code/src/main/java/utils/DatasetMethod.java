@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 public class DatasetMethod {
     public String serializeString(String method, Orders orders) {
-        System.out.println("entrei serialize");
         if (method.equals("JSON"))
             return new Serializer().json(orders);
         if (method.equals("XML"))

@@ -1,19 +1,22 @@
 package utils;
 
-import generator.GenerateArrayInteger;
-import generator.GenerateOrder;
+import generator.*;
 import model.Orders;
 
 public class DatasetType {
     public Orders getType(String type, String size){
-//        if (type.equals("BOOL")) {}
+        if (type.equals("BOOL"))
+            return new GenerateArrayBool().generate(DatasetSize.getSize(size));
         if (type.equals("INTEGER"))
-            return new GenerateArrayInteger().createIntegers(DatasetSize.getSize(size));
-//        if (type.equals("DOUBLE")) {}
-//        if (type.equals("CHAR")) {}
-//        if (type.equals("STRING")) {}
+            return new GenerateArrayInteger().generate(DatasetSize.getSize(size));
+        if (type.equals("DOUBLE"))
+            return new GenerateArrayDouble().generate(DatasetSize.getSize(size));
+        if (type.equals("CHAR"))
+            return new GenerateArrayChar().generate(DatasetSize.getSize(size));
+        if (type.equals("STRING"))
+            return new GenerateArrayString().generate(DatasetSize.getSize(size));
         if (type.equals("STRUCT"))
-            return new GenerateOrder().createOrders(DatasetSize.getSize(size));
+            return new GenerateOrder().generate(DatasetSize.getSize(size));
         else return null;
     }
 }
