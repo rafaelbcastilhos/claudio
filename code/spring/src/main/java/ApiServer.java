@@ -1,5 +1,3 @@
-package rest;
-
 import database.Item;
 import database.Repository;
 import model.Orders;
