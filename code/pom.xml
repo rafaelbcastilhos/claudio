@@ -10,8 +10,10 @@
     <version>1.0</version>
     <modules>
         <module>configuration</module>
-<!--        <module>spring-server</module>-->
-<!--        <module>lambda-server-client</module>-->
+        <module>local-client</module>
+<!--        <module>lambda-client</module>-->
+<!--        <module>spring-client-server</module>-->
+<!--        <module>lambda-client</module>-->
     </modules>
 
     <properties>

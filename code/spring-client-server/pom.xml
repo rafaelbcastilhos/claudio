@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ufsc.cco</groupId>
-	<artifactId>spring-server</artifactId>
+	<artifactId>spring-client-server</artifactId>
 	<version>1.0</version>
 	<name>spring-server</name>
 	<packaging>jar</packaging>
