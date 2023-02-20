@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <artifactId>lambda-server-client</artifactId>
+    <artifactId>lambda-server</artifactId>
     <dependencies>
         <dependency>
             <groupId>ufsc.cco</groupId>

@@ -8,6 +8,7 @@ import com.squareup.okhttp.*;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.DatasetType;
+import utils.Headers;
 import java.io.IOException;
 import java.util.*;
 
@@ -18,6 +19,7 @@ public class ClientApplication implements
         String type = request.getHeaders().get("type");
         String size = request.getHeaders().get("size");
         String method = request.getHeaders().get("method");
+        String distance = request.getHeaders().get("distance");
         String id = UUID.randomUUID().toString();
 
         Orders obj = new DatasetType().getType(type, size);
@@ -46,7 +48,7 @@ public class ClientApplication implements
             requestBody = RequestBody.create(mediaType, serialized);
         }
         Request requestClient = new Request.Builder()
-                .url("http://aws.server.api.endpoint/")
+                .url("http://localhost:8080/server")
                 .method("POST", requestBody)
                 .addHeader("method", method)
                 .addHeader("id", id)
@@ -76,15 +78,9 @@ public class ClientApplication implements
 //                timeRequest
 //        ));
 
-
-        Map<String, String> header = new HashMap<>();
-        header.put("Content-Type", "application/json");
-        header.put("Access-Control-Allow-Origin", "*");
-        header.put("Access-Control-Allow-Headers", "*");
-        header.put("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
         return new APIGatewayProxyResponseEvent()
                 .withStatusCode(200)
-                .withHeaders(header)
+                .withHeaders(new Headers().getHeaders())
                 .withBody(null);
     }
 }
