@@ -1,0 +1,88 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: tcc
+Globals:
+  Function:
+    Runtime: java11
+    Timeout: 30
+    MemorySize: 1024
+
+Parameters:
+  AwsId:
+    Type: String
+  Region:
+    Type: String
+
+Resources:
+  RestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      DefinitionBody:
+        'Fn::Transform':
+          Name: 'AWS::Include'
+          Parameters:
+            Location: s3://docs.tracebox.com.br/deploy/api_rest.json
+      Variables:
+        AwsId: !Ref AwsId
+        Region: !Ref Region
+
+  postClientFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures:
+        - x86_64
+      SnapStart:
+        ApplyOn: PublishedVersions
+      FunctionName:
+        Fn::Join: [ "", [ "postClient" ] ]
+      CodeUri: lambda-client/target/lambda-client-1.0.jar
+      Handler: ufsc.tcc.cco.client.ClientApplication::handleRequest
+      Events:
+        List:
+          Type: Api
+          Properties:
+            Path: /client
+            Method: POST
+            RestApiId:
+              Ref: RestApi
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:PutItem"
+                - "dynamodb:UpdateItem"
+              Resource:
+                - Fn::Join: [ "", [ "arn:aws:dynamodb:", !Ref Region, ":", !Ref AwsId, ":table/item" ] ]
+
+  postServerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures:
+        - x86_64
+      SnapStart:
+        ApplyOn: PublishedVersions
+      FunctionName:
+        Fn::Join: [ "", [ "postServer" ] ]
+      CodeUri: lambda-server/target/lambda-server-1.0.jar
+      Handler: ufsc.tcc.cco.server.ServerApplication::handleRequest
+      Events:
+        List:
+          Type: Api
+          Properties:
+            Path: /server
+            Method: POST
+            RestApiId:
+              Ref: RestApi
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:PutItem"
+                - "dynamodb:GetItem"
+                - "dynamodb:Scan"
+                - "dynamodb:Query"
+                - "dynamodb:UpdateItem"
+              Resource:
+                - Fn::Join: [ "", [ "arn:aws:dynamodb:", !Ref Region, ":", !Ref AwsId, ":table/item" ] ]

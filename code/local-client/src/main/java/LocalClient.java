@@ -1,8 +1,8 @@
-package ufsc.tcc.cco.client;
+package rest;
 
 import com.squareup.okhttp.Request;
 
-public class ClientClient {
+public class ClientLambda {
     public static void main(String[] args) {
         String type = args[0];
         String size = args[1];

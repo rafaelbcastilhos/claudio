@@ -8,11 +8,8 @@ import com.squareup.okhttp.*;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.DatasetType;
-import utils.Headers;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class ClientApplication implements
         RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -80,9 +77,14 @@ public class ClientApplication implements
 //        ));
 
 
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        header.put("Access-Control-Allow-Origin", "*");
+        header.put("Access-Control-Allow-Headers", "*");
+        header.put("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
         return new APIGatewayProxyResponseEvent()
                 .withStatusCode(200)
-                .withHeaders(Headers.headers())
+                .withHeaders(header)
                 .withBody(null);
     }
 }

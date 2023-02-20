@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: API Gateway
+  description: |-
+    API Gateway
+  version: "1.0"
+
+tags:
+  - name: client
+    description: client
+  - name: server
+    description: server
+paths:
+  /client:
+    post:
+      tags:
+        - client
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:${stageVariables.Region}:576199001204:function:postClient/invocations"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        type: "aws_proxy"
+      summary: client
+      operationId: postClient
+      requestBody:
+        description: Post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Access-Control-Allow-Methods:
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+            Access-Control-Allow-Headers:
+              $ref: '#/components/headers/Access-Control-Allow-Headers'
+        '400':
+          description: Invalid Request
+        '500':
+          description: Internal Server Error
+
+  /server:
+    post:
+      tags:
+        - server
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:${stageVariables.Region}:576199001204:function:postServer/invocations"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        type: "aws_proxy"
+      summary: server
+      operationId: postServer
+      requestBody:
+        description: Post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Access-Control-Allow-Methods:
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+            Access-Control-Allow-Headers:
+              $ref: '#/components/headers/Access-Control-Allow-Headers'
+        '400':
+          description: Invalid Request
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    Body:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+    Response:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string

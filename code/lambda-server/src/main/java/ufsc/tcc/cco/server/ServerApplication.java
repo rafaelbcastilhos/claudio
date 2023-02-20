@@ -8,8 +8,9 @@ import database.Item;
 import database.Repository;
 import model.Orders;
 import utils.DatasetMethod;
-import utils.Headers;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServerApplication implements
         RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -43,9 +44,14 @@ public class ServerApplication implements
         item.setTimeDeserialize(timeDeserialize);
         Repository.getInstance().update(item);
 
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        header.put("Access-Control-Allow-Origin", "*");
+        header.put("Access-Control-Allow-Headers", "*");
+        header.put("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
         return new APIGatewayProxyResponseEvent()
                 .withStatusCode(200)
-                .withHeaders(Headers.headers())
+                .withHeaders(header)
                 .withBody(null);
     }
 }
