@@ -58,17 +58,17 @@ public class Client {
             Date endRequest = new Date();
             long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
             long timeRequest = endRequest.getTime() - initRequest.getTime();
-            System.out.println("response: " + response.body().string());
+            System.out.println("response: " + response.code());
 
-            Repository.getInstance().create(new Item(
-                    id,
-                    type,
-                    size,
-                    method,
-                    bytesSerialize,
-                    timeSerialize,
-                    timeRequest
-            ));
+//            Repository.getInstance().create(new Item(
+//                    id,
+//                    type,
+//                    size,
+//                    method,
+//                    bytesSerialize,
+//                    timeSerialize,
+//                    timeRequest
+//            ));
         }
     }
 }
