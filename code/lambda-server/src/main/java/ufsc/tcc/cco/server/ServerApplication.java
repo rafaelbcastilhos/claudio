@@ -9,10 +9,7 @@ import database.Repository;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.Headers;
-
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ServerApplication implements
         RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -21,6 +18,9 @@ public class ServerApplication implements
         String method = request.getHeaders().get("method");
         String id = request.getHeaders().get("id");
         System.out.println("method: " + method);
+        System.out.println("id: " + id);
+
+        System.out.println("headers: " + request.getHeaders());
 
         String bodyString = null;
         Date initDeserialize = null;
@@ -42,9 +42,11 @@ public class ServerApplication implements
         }
         long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
-        Item item = Repository.getInstance().get(id);
-        item.setTimeDeserialize(timeDeserialize);
-        Repository.getInstance().update(item);
+        Repository.getInstance().create(new Item(
+                id,
+                method,
+                timeDeserialize
+        ));
 
         return new APIGatewayProxyResponseEvent()
                 .withStatusCode(200)
