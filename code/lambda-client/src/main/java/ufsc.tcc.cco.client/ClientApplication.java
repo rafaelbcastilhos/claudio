@@ -5,6 +5,8 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.squareup.okhttp.*;
+import database.Item;
+import database.Repository;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.DatasetType;
@@ -20,6 +22,7 @@ public class ClientApplication implements
         String size = request.getHeaders().get("size");
         String method = request.getHeaders().get("method");
         String distance = request.getHeaders().get("distance");
+        String to = request.getHeaders().get("to");
         String id = UUID.randomUUID().toString();
 
         Orders obj = new DatasetType().getType(type, size);
@@ -32,7 +35,7 @@ public class ClientApplication implements
         long bytesSerialize = 0;
         if (method.equals("JSON") || method.equals("XML")){
             initSerialize = new Date();
-            String serialized = new DatasetMethod().serializeString(method, obj).toString();
+            String serialized = new DatasetMethod().serializeString(method, obj);
             System.out.println("serialize: " + serialized);
             endSerialize = new Date();
             bytesSerialize = serialized.getBytes().length;
@@ -48,13 +51,14 @@ public class ClientApplication implements
             requestBody = RequestBody.create(mediaType, serialized);
         }
         Request requestClient = new Request.Builder()
-                .url("http://localhost:8080/server")
+                .url(to)
                 .method("POST", requestBody)
                 .addHeader("method", method)
                 .addHeader("id", id)
                 .build();
 
         System.out.println("request: " + requestClient);
+        System.out.println("headers: " + request.getHeaders());
 
         Date initRequest = new Date();
         Response response = null;
@@ -68,15 +72,13 @@ public class ClientApplication implements
         long timeRequest = endRequest.getTime() - initRequest.getTime();
         System.out.println("response: " + response.code());
 
-//        Repository.getInstance().create(new Item(
-//                id,
-//                type,
-//                size,
-//                method,
-//                bytesSerialize,
-//                timeSerialize,
-//                timeRequest
-//        ));
+        Item item = Repository.getInstance().get(id);
+        item.setType(type);
+        item.setSize(size);
+        item.setDistance(distance);
+        item.setTimeSerialize(timeSerialize);
+        item.setTimeRequest(timeRequest);
+        Repository.getInstance().update(item);
 
         return new APIGatewayProxyResponseEvent()
                 .withStatusCode(200)
