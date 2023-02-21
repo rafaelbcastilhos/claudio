@@ -11,7 +11,7 @@ public class DatasetSize {
         else
             return 0;
     }
-    public static final int SMALL = 10,
+    public static final int SMALL = 100,
             MEDIUM = 1000,
             BIG = 100000;
 }
