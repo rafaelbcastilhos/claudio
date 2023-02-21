@@ -15,13 +15,13 @@ paths:
     post:
       tags:
         - client
+      summary: client
+      operationId: postClient
       x-amazon-apigateway-integration:
-        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:${stageVariables.Region}:576199001204:function:postClient/invocations"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:826283206450:function:postClient/invocations"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         type: "aws_proxy"
-      summary: client
-      operationId: postClient
       requestBody:
         description: Post object
         content:
@@ -44,13 +44,13 @@ paths:
     post:
       tags:
         - server
+      summary: server
+      operationId: postServer
       x-amazon-apigateway-integration:
-        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:${stageVariables.Region}:576199001204:function:postServer/invocations"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:826283206450:function:postServer/invocations"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         type: "aws_proxy"
-      summary: server
-      operationId: postServer
       requestBody:
         description: Post object
         content:

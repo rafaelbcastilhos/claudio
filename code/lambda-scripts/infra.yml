@@ -21,7 +21,8 @@ Resources:
         'Fn::Transform':
           Name: 'AWS::Include'
           Parameters:
-            Location: s3://docs.tracebox.com.br/deploy/api_rest.json
+            Location: s3://ufsc-cco-tcc/deploy/api.json
+      StageName: v1
       Variables:
         AwsId: !Ref AwsId
         Region: !Ref Region
@@ -33,9 +34,8 @@ Resources:
         - x86_64
       SnapStart:
         ApplyOn: PublishedVersions
-      FunctionName:
-        Fn::Join: [ "", [ "postClient" ] ]
-      CodeUri: lambda-client/target/lambda-client-1.0.jar
+      FunctionName: postClient
+      CodeUri: ../lambda-client/target/lambda-client-1.0.jar
       Handler: ufsc.tcc.cco.client.ClientApplication::handleRequest
       Events:
         List:
@@ -51,6 +51,9 @@ Resources:
             - Effect: "Allow"
               Action:
                 - "dynamodb:PutItem"
+                - "dynamodb:GetItem"
+                - "dynamodb:Scan"
+                - "dynamodb:Query"
                 - "dynamodb:UpdateItem"
               Resource:
                 - Fn::Join: [ "", [ "arn:aws:dynamodb:", !Ref Region, ":", !Ref AwsId, ":table/item" ] ]
@@ -62,9 +65,8 @@ Resources:
         - x86_64
       SnapStart:
         ApplyOn: PublishedVersions
-      FunctionName:
-        Fn::Join: [ "", [ "postServer" ] ]
-      CodeUri: lambda-server/target/lambda-server-1.0.jar
+      FunctionName: postServer
+      CodeUri: ../lambda-server/target/lambda-server-1.0.jar
       Handler: ufsc.tcc.cco.server.ServerApplication::handleRequest
       Events:
         List:

@@ -1,4 +1,4 @@
-multi-file-swagger index.yml > index.json
+multi-file-swagger api.yml > api.json
 
 cd ../lambda-server/
 mvn clean package -q

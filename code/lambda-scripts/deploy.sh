@@ -4,8 +4,8 @@ set -e
 echo "Enter region:"
 echo "0: us-east-1 (N. Virginia)"
 echo "1: us-east-2 (Ohio)"
-echo "1: eu-west-2 (London)"
-echo "1: ap-southeast-2 (Sydney)"
+echo "2: eu-west-2 (London)"
+echo "3: ap-southeast-2 (Sydney)"
 
 read opt
 
@@ -23,12 +23,12 @@ else
 fi
 
 SERVICE="tcc"
-AWS_ID="576199001204"
+AWS_ID="826283206450"
 BUCKET="ufsc-cco-tcc"
 BUCKET_DEPLOY="deploy"
 
 echo -e "\nDeploy REST API to S3..."
-aws s3 cp ./index.json s3://${BUCKET}/${BUCKET_DEPLOY}/api.json
+aws s3 cp ./api.json s3://${BUCKET}/${BUCKET_DEPLOY}/api.json
 
 sam package \
   --template-file infra.yml \
@@ -39,7 +39,7 @@ sam package \
 
 cfn-include ./output-template.yml -m > ./output.json
 
-rm ./${STAGE}-output-template.yml
+rm ./output-template.yml
 
 sam deploy \
   --template-file output.json \
@@ -50,4 +50,7 @@ sam deploy \
   --region ${REGION} \
   --parameter-overrides AwsId=${AWS_ID} Region=${REGION}
 
-  aws s3 rm s3://${BUCKET}/${BUCKET_DEPLOY}/ --recursive --quiet
+aws s3 rm s3://${BUCKET}/${BUCKET_DEPLOY}/ --recursive --quiet
+
+rm ./output.json
+rm ./api.json
