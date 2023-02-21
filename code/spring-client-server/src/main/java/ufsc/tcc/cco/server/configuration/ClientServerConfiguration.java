@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @SpringBootConfiguration
-public class ServerConfiguration { }
+public class ClientServerConfiguration { }

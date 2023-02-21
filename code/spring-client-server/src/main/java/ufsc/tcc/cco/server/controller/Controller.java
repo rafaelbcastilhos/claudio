@@ -1,10 +1,7 @@
 package ufsc.tcc.cco.server.controller;
 
 import com.squareup.okhttp.*;
-import database.Item;
-import database.Repository;
 import model.Orders;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +17,8 @@ import org.springframework.http.HttpStatus;
 import utils.DatasetType;
 import utils.Headers;
 
-@Controller
-public class ServerController {
+@org.springframework.stereotype.Controller
+public class Controller {
 
 	@RequestMapping(value = "/server", method = RequestMethod.POST)
 	@ResponseBody
