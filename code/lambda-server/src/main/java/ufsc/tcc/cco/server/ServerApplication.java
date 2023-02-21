@@ -45,7 +45,8 @@ public class ServerApplication implements
         Repository.getInstance().create(new Item(
                 id,
                 method,
-                timeDeserialize
+                timeDeserialize,
+                "LAMBDA"
         ));
 
         return new APIGatewayProxyResponseEvent()

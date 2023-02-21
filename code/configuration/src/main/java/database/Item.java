@@ -10,17 +10,19 @@ public class Item {
     String size;
     String method;
     String distance;
+    String service;
+
     Long bytesSerialize;
     Long timeSerialize;
     Long timeRequest;
     Long timeDeserialize;
-
     public Item() {}
 
-    public Item(String id, String method, Long timeDeserialize) {
+    public Item(String id, String method, Long timeDeserialize, String service) {
         this.id = id;
         this.method = method;
         this.timeDeserialize = timeDeserialize;
+        this.service = service;
     }
 
     @DynamoDbPartitionKey
@@ -62,6 +64,14 @@ public class Item {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
     }
 
     public Long getBytesSerialize() {
