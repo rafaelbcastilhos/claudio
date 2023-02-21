@@ -13,10 +13,6 @@ public final class Repository {
         return INSTANCE;
     }
 
-    public static DynamoDbTable<Item> getTable() {
-        return table;
-    }
-
     private static final DynamoDbTable<Item> table =
             DynamoDB.getInstanceDynamoDb().table(
                     "item", TableSchema.fromBean(Item.class));

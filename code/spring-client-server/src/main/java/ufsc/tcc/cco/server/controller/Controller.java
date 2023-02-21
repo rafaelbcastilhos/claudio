@@ -50,10 +50,12 @@ public class ServerController {
 			endDeserialize = new Date();
 		}
 		long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
-//
-//		Item item = Repository.getInstance().get(id);
-//		item.setTimeDeserialize(timeDeserialize);
-//		Repository.getInstance().update(item);
+
+//		Repository.getInstance().create(new Item(
+//				id,
+//				method,
+//				timeDeserialize
+//		));
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
@@ -63,61 +65,59 @@ public class ServerController {
 	public ResponseEntity<Object> client(HttpServletRequest request) throws IOException {
 		String type = request.getHeader("type");
 		String size = request.getHeader("size");
-		String method = request.getHeader("method");;
+		String method = request.getHeader("method");
+		String distance = request.getHeader("distance");
 		String id = UUID.randomUUID().toString();
 
 		Orders obj = new DatasetType().getType(type, size);
 
 		OkHttpClient ok = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
-		for (int i = 0; i < 10; i++) {
-			RequestBody requestBody = null;
-			Date initSerialize = null;
-			Date endSerialize = null;
-			long bytesSerialize = 0;
-			if (method.equals("JSON") || method.equals("XML")){
-				initSerialize = new Date();
-				String serialized = new DatasetMethod().serializeString(method, obj).toString();
-				System.out.println("serialize: " + serialized);
-				endSerialize = new Date();
-				bytesSerialize = serialized.getBytes().length;
-				requestBody = RequestBody.create(mediaType, serialized);
-			}
-
-			if (method.equals("MSGPACK") || method.equals("KRYO")){
-				initSerialize = new Date();
-				byte[] serialized = new DatasetMethod().serializeBytes(method, obj);
-				System.out.println("serialize: " + Arrays.toString(serialized));
-				endSerialize = new Date();
-				bytesSerialize = serialized.length;
-				requestBody = RequestBody.create(mediaType, serialized);
-			}
-			Request requestClient = new Request.Builder()
-					.url("http://localhost:8080/server")
-					.method("POST", requestBody)
-					.addHeader("method", method)
-					.addHeader("id", id)
-					.build();
-
-			System.out.println("request: " + request);
-
-			Date initRequest = new Date();
-			Response response = ok.newCall(requestClient).execute();
-			Date endRequest = new Date();
-			long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
-			long timeRequest = endRequest.getTime() - initRequest.getTime();
-			System.out.println("response: " + response.code());
-
-//            Repository.getInstance().create(new Item(
-//                    id,
-//                    type,
-//                    size,
-//                    method,
-//                    bytesSerialize,
-//                    timeSerialize,
-//                    timeRequest
-//            ));
+		RequestBody requestBody = null;
+		Date initSerialize = null;
+		Date endSerialize = null;
+		long bytesSerialize = 0;
+		if (method.equals("JSON") || method.equals("XML")){
+			initSerialize = new Date();
+			String serialized = new DatasetMethod().serializeString(method, obj).toString();
+			System.out.println("serialize: " + serialized);
+			endSerialize = new Date();
+			bytesSerialize = serialized.getBytes().length;
+			requestBody = RequestBody.create(mediaType, serialized);
 		}
+
+		if (method.equals("MSGPACK") || method.equals("KRYO")){
+			initSerialize = new Date();
+			byte[] serialized = new DatasetMethod().serializeBytes(method, obj);
+			System.out.println("serialize: " + Arrays.toString(serialized));
+			endSerialize = new Date();
+			bytesSerialize = serialized.length;
+			requestBody = RequestBody.create(mediaType, serialized);
+		}
+		Request requestClient = new Request.Builder()
+				.url("http://localhost:8080/server")
+				.method("POST", requestBody)
+				.addHeader("method", method)
+				.addHeader("id", id)
+				.build();
+
+		System.out.println("request: " + request);
+
+		Date initRequest = new Date();
+		Response response = ok.newCall(requestClient).execute();
+		Date endRequest = new Date();
+		long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
+		long timeRequest = endRequest.getTime() - initRequest.getTime();
+		System.out.println("response: " + response.code());
+
+//		Item item = Repository.getInstance().get(id);
+//		item.setType(type);
+//		item.setSize(size);
+//		item.setDistance(distance);
+//		item.setTimeSerialize(timeSerialize);
+//		item.setTimeRequest(timeRequest);
+//		Repository.getInstance().update(item);
+
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
 }
