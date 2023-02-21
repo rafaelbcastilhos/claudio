@@ -14,6 +14,9 @@ public class LocalClient {
         String distance = args[3];
         String to = args[4];
         OkHttpClient ok = new OkHttpClient();
+        ok.setConnectTimeout(30, TimeUnit.SECONDS);
+        ok.setWriteTimeout(30, TimeUnit.SECONDS);
+        ok.setReadTimeout(30, TimeUnit.SECONDS);
         RequestBody reqbody = RequestBody.create(null, new byte[0]);
         for (int i = 0; i < 10; i++) {
             Request request = new Request.Builder()
