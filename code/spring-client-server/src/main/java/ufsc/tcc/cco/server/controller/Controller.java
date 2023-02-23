@@ -1,6 +1,8 @@
 package ufsc.tcc.cco.server.controller;
 
 import com.squareup.okhttp.*;
+import database.Item;
+import database.Repository;
 import model.Orders;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,12 +50,12 @@ public class Controller {
 		}
 		long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
-//		Repository.getInstance().create(new Item(
-//				id,
-//				method,
-//				timeDeserialize,
-//		        "SERVICE"
-//		));
+		Repository.getInstance().create(new Item(
+				id,
+				method,
+				timeDeserialize,
+		        "SERVICE"
+		));
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
@@ -65,6 +67,7 @@ public class Controller {
 		String size = request.getHeader("size");
 		String method = request.getHeader("method");
 		String distance = request.getHeader("distance");
+		String to = request.getHeader("to");
 		String id = UUID.randomUUID().toString();
 
 		Orders obj = new DatasetType().getType(type, size);
@@ -93,7 +96,7 @@ public class Controller {
 			requestBody = RequestBody.create(mediaType, serialized);
 		}
 		Request requestClient = new Request.Builder()
-				.url("http://localhost:8080/server")
+				.url(to)
 				.method("POST", requestBody)
 				.addHeader("method", method)
 				.addHeader("id", id)
@@ -108,13 +111,13 @@ public class Controller {
 		long timeRequest = endRequest.getTime() - initRequest.getTime();
 		System.out.println("response: " + response.code());
 
-//		Item item = Repository.getInstance().get(id);
-//		item.setType(type);
-//		item.setSize(size);
-//		item.setDistance(distance);
-//		item.setTimeSerialize(timeSerialize);
-//		item.setTimeRequest(timeRequest);
-//		Repository.getInstance().update(item);
+		Item item = Repository.getInstance().get(id);
+		item.setType(type);
+		item.setSize(size);
+		item.setDistance(distance);
+		item.setTimeSerialize(timeSerialize);
+		item.setTimeRequest(timeRequest);
+		Repository.getInstance().update(item);
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}

@@ -20,7 +20,7 @@ public class LocalClient {
         RequestBody reqbody = RequestBody.create(null, new byte[0]);
         for (int i = 0; i < 10; i++) {
             Request request = new Request.Builder()
-                    .url("https://bvfntueu6e.execute-api.us-east-1.amazonaws.com/v1/client")
+                    .url("http://52.86.15.16:8080/client")
                     .method("POST", reqbody)
                     .addHeader("method", method)
                     .addHeader("type", type)
