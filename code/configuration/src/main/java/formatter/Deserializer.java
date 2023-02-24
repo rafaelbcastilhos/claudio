@@ -11,10 +11,12 @@ import org.msgpack.jackson.dataformat.MessagePackFactory;
 import java.io.IOException;
 
 public class Deserializer {
+    // Método para desserializar uma string JSON em um objeto Orders
     public Orders json(String input){
         return new Gson().fromJson(input, Orders.class);
     }
 
+    // Método para desserializar uma string XML em um objeto Orders
     public Orders xml(String input){
         XmlMapper mapper = new XmlMapper();
         try {
@@ -24,6 +26,7 @@ public class Deserializer {
         }
     }
 
+    // Método para desserializar uma mensagem em formato MessagePack em um objeto Orders
     public Orders msgPack(byte[] input){
         ObjectMapper objectMapper = new ObjectMapper(new MessagePackFactory().setReuseResourceInParser(false));
         Orders deserialized = null;
@@ -35,6 +38,7 @@ public class Deserializer {
         return deserialized;
     }
 
+    // Método para desserializar uma mensagem em formato Kryo em um objeto Orders
     public Orders kryo(byte[] input){
         Kryo kryo = new Kryo();
         Input serialized = new Input(input);

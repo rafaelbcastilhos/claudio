@@ -17,20 +17,17 @@ public final class Repository {
             DynamoDB.getInstanceDynamoDb().table(
                     "item", TableSchema.fromBean(Item.class));
 
-    /**
-     * Atualiza item.
-     */
+    // Atualiza item.
     public void update(Item item){
         table.updateItem(item);
     }
 
-    /**
-     * Cria item.
-     */
+    // Cria item.
     public void create(Item item){
         table.putItem(item);
     }
 
+    // Captura item.
     public Item get(String id){
         Key key = Key.builder()
                 .partitionValue(id)

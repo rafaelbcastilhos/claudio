@@ -22,6 +22,7 @@ import utils.Headers;
 @org.springframework.stereotype.Controller
 public class Controller {
 
+	// This method receives a POST request on "/server" endpoint and deserializes the request body based on the "method" header
 	@RequestMapping(value = "/server", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> server(HttpServletRequest request) throws IOException {
@@ -34,6 +35,7 @@ public class Controller {
 		Date initDeserialize = null;
 		Date endDeserialize = null;
 		Orders deserialized = null;
+		// Deserialize the request body based on the "method" header using DatasetMethod class
 		if (method.equals("JSON") || method.equals("XML")){
 			bodyString = request.getReader().lines().reduce("",String::concat);
 			initDeserialize = new Date();
@@ -48,6 +50,8 @@ public class Controller {
 			deserialized = new DatasetMethod().deserializeBytes(method, bodyBytes);
 			endDeserialize = new Date();
 		}
+
+		// Calculate the time taken to deserialize
 		long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
 		Repository.getInstance().create(new Item(
@@ -60,6 +64,7 @@ public class Controller {
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
 
+	// This method receives a POST request on "/client" endpoint and serializes an Orders object based on the "method" header
 	@RequestMapping(value = "/client", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> client(HttpServletRequest request) throws IOException {
@@ -70,6 +75,7 @@ public class Controller {
 		String to = request.getHeader("to");
 		String id = UUID.randomUUID().toString();
 
+		// Create an Orders object based on the "type" and "size" headers using DatasetType class
 		Orders obj = new DatasetType().getType(type, size);
 
 		OkHttpClient ok = new OkHttpClient();
@@ -78,6 +84,8 @@ public class Controller {
 		Date initSerialize = null;
 		Date endSerialize = null;
 		long bytesSerialize = 0;
+
+		// Serialize the Orders object based on the "method" header using DatasetMethod class
 		if (method.equals("JSON") || method.equals("XML")){
 			initSerialize = new Date();
 			String serialized = new DatasetMethod().serializeString(method, obj).toString();
@@ -107,7 +115,11 @@ public class Controller {
 		Date initRequest = new Date();
 		Response response = ok.newCall(requestClient).execute();
 		Date endRequest = new Date();
+
+		// Calculate the time taken to serialize
 		long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
+
+		// Calculate the time taken to request
 		long timeRequest = endRequest.getTime() - initRequest.getTime();
 		System.out.println("response: " + response.code());
 

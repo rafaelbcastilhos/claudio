@@ -27,6 +27,7 @@ public class ServerApplication implements
         Date endDeserialize = null;
         Orders deserialized = null;
 
+        // Deserialize the request body based on the "method" header using DatasetMethod class
         if (method.equals("JSON") || method.equals("XML")){
             bodyString = request.getBody();
             initDeserialize = new Date();
@@ -40,6 +41,7 @@ public class ServerApplication implements
             deserialized = new DatasetMethod().deserializeBytes(method, is);
             endDeserialize = new Date();
         }
+        // Calculate the time taken to deserialize
         long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
         Repository.getInstance().create(new Item(

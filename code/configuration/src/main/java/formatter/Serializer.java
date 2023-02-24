@@ -13,10 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Serializer {
+    // Converte um objeto Orders em uma string JSON.
     public String json(Orders orders){
         return new Gson().toJson(orders);
     }
 
+    // Converte um objeto Orders em uma string XML.
     public String xml(Orders orders){
         XmlMapper mapper = new XmlMapper();
         try {
@@ -26,6 +28,7 @@ public class Serializer {
         }
     }
 
+    // Converte um objeto Orders em um array de bytes MessagePack.
     public byte[] msgPack(Orders orders) {
         ObjectMapper  objectMapper = new ObjectMapper(new MessagePackFactory().setReuseResourceInParser(false));
         Map<String, Object> map = new HashMap<>();
@@ -39,6 +42,7 @@ public class Serializer {
         return bs;
     }
 
+    // Converte um objeto Orders em um array de bytes Kryo.
     public byte[] kryo(Orders orders){
         Kryo kryo = new Kryo();
         Output output =

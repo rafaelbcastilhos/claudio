@@ -11,7 +11,7 @@ public class DatasetSize {
         else
             return 0;
     }
-    public static final int SMALL = 100,
-            MEDIUM = 1000,
-            BIG = 100000;
+    public static final int SMALL = 100, // 100 items no array
+            MEDIUM = 1000, // 1000 items no array
+            BIG = 100000; // 100000 items no array
 }
