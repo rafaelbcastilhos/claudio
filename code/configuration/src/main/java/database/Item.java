@@ -9,7 +9,6 @@ public class Item {
     String type;
     String size;
     String method;
-    String distance;
     String service;
 
     Long bytesSerialize;
@@ -56,14 +55,6 @@ public class Item {
 
     public void setMethod(String method) {
         this.method = method;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
     }
 
     public String getService() {

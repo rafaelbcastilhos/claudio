@@ -71,7 +71,6 @@ public class Controller {
 		String type = request.getHeader("type");
 		String size = request.getHeader("size");
 		String method = request.getHeader("method");
-		String distance = request.getHeader("distance");
 		String to = request.getHeader("to");
 		String id = UUID.randomUUID().toString();
 
@@ -126,7 +125,6 @@ public class Controller {
 		Item item = Repository.getInstance().get(id);
 		item.setType(type);
 		item.setSize(size);
-		item.setDistance(distance);
 		item.setTimeSerialize(timeSerialize);
 		item.setTimeRequest(timeRequest);
 		Repository.getInstance().update(item);

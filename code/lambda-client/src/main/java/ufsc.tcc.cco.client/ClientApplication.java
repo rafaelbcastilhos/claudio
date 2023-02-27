@@ -21,7 +21,6 @@ public class ClientApplication implements
         String type = request.getHeaders().get("type");
         String size = request.getHeaders().get("size");
         String method = request.getHeaders().get("method");
-        String distance = request.getHeaders().get("distance");
         String to = request.getHeaders().get("to");
         String id = UUID.randomUUID().toString();
 
@@ -82,7 +81,6 @@ public class ClientApplication implements
         Item item = Repository.getInstance().get(id);
         item.setType(type);
         item.setSize(size);
-        item.setDistance(distance);
         item.setTimeSerialize(timeSerialize);
         item.setTimeRequest(timeRequest);
         Repository.getInstance().update(item);

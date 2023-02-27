@@ -14,7 +14,6 @@ public class Headers {
         header.put("method", "*");
         header.put("size", "*");
         header.put("type", "*");
-        header.put("distance", "*");
         header.put("to", "*");
         return header;
     }

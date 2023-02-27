@@ -7,13 +7,12 @@ import java.util.concurrent.TimeUnit;
 
 public class LocalClient {
     public static void main(String[] args) throws InterruptedException, IOException {
-        // STRUCT S JSON M localhost:8080
+        // STRUCT S JSON localhost:8080
         // Recebe os argumentos passados por linha de comando
         String type = args[0]; // tipo de dados para serem serializados
         String size = args[1]; // tamanho dos dados para serem serializados
         String method = args[2]; // método de serialização a ser utilizado
-        String distance = args[3]; // distância a ser informada na requisição
-        String to = args[4]; // URL do servidor que receberá a requisição
+        String to = args[3]; // URL do servidor que receberá a requisição
 
         // Cria um cliente HTTP utilizando a biblioteca OkHttpClient
         OkHttpClient ok = new OkHttpClient();
@@ -33,7 +32,6 @@ public class LocalClient {
                     .addHeader("method", method) // adiciona o método de serialização na requisição
                     .addHeader("type", type) // adiciona o tipo de dados na requisição
                     .addHeader("size", size) // adiciona o tamanho dos dados na requisição
-                    .addHeader("distance", distance) // adiciona a distância na requisição
                     .addHeader("to", to) // adiciona a URL do servidor de destino na requisição
                     .build();
 
