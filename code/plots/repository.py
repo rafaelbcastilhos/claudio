@@ -11,6 +11,7 @@ def get_method(method):
         FilterExpression="#method = :requestMethod",
         ExpressionAttributeValues={":requestMethod": method},
         ExpressionAttributeNames={"#method": "method"},
+        ProjectionExpression="timeSerialize,timeDeserialize,timeRequest",
     )
 
     items = response['Items']
@@ -26,6 +27,7 @@ def get_method_size(method, size):
         FilterExpression="#method = :requestMethod and #size = :requestSize",
         ExpressionAttributeValues={":requestMethod": method, ":requestSize": size},
         ExpressionAttributeNames={"#method": "method", "#size": "size"},
+        ProjectionExpression="timeSerialize,timeDeserialize,timeRequest",
     )
 
     items = response['Items']
@@ -41,6 +43,7 @@ def get_service_size(service, size):
         FilterExpression="#service = :requestService and #size = :requestSize",
         ExpressionAttributeValues={":requestService": service, ":requestSize": size},
         ExpressionAttributeNames={"#service": "service", "#size": "size"},
+        ProjectionExpression="timeSerialize,timeDeserialize,timeRequest",
     )
 
     items = response['Items']
