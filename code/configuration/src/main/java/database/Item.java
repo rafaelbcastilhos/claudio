@@ -10,7 +10,6 @@ public class Item {
     String size;
     String method;
     String service;
-
     Long bytesSerialize;
     Long timeSerialize;
     Long timeRequest;
