@@ -1,9 +1,9 @@
 import repository
 
-json = repository.get_method("JSON")
-xml = repository.get_method("XML")
-msgpack = repository.get_method("MSGPACK")
-kryo = repository.get_method("KRYO")
+json = repository.get_method_size("JSON", "S")
+xml = repository.get_method_size("XML", "S")
+msgpack = repository.get_method_size("MSGPACK", "S")
+kryo = repository.get_method_size("KRYO", "S")
 
 for j in json:
     print(j)

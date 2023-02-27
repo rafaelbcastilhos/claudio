@@ -39,7 +39,7 @@ def get_method_size(method, size):
 def get_service_size(service, size):
     response = table.scan(
         FilterExpression="#service = :requestService and #size = :requestSize",
-        ExpressionAttributeValues={":requestService": method, ":requestSize": size},
+        ExpressionAttributeValues={":requestService": service, ":requestSize": size},
         ExpressionAttributeNames={"#service": "service", "#size": "size"},
     )
 
