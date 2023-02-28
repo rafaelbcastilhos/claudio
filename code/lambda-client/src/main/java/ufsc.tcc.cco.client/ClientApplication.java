@@ -81,6 +81,7 @@ public class ClientApplication implements
         Item item = Repository.getInstance().get(id);
         item.setType(type);
         item.setSize(size);
+        item.setBytesSerialize(bytesSerialize);
         item.setTimeSerialize(timeSerialize);
         item.setTimeRequest(timeRequest);
         Repository.getInstance().update(item);
