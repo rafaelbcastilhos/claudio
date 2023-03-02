@@ -3,6 +3,7 @@ package ufsc.tcc.cco.server.controller;
 import com.squareup.okhttp.*;
 import database.Item;
 import database.Repository;
+import model.Order;
 import model.Orders;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,22 +45,24 @@ public class Controller {
 		}
 
 		if (method.equals("MSGPACK") || method.equals("KRYO")){
+			System.out.println("entrei bytes");
 			InputStream is = request.getInputStream();
 			bodyBytes = is.readAllBytes();
 			initDeserialize = new Date();
 			deserialized = new DatasetMethod().deserializeBytes(method, bodyBytes);
 			endDeserialize = new Date();
 		}
+		System.out.println("size: " + deserialized.getOrders().size());
 
 		// Calculate the time taken to deserialize
 		long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
-		Repository.getInstance().create(new Item(
-				id,
-				method,
-				timeDeserialize,
-		        "SERVICE"
-		));
+//		Repository.getInstance().create(new Item(
+//				id,
+//				method,
+//				timeDeserialize,
+//		        "SERVICE"
+//		));
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
@@ -122,13 +125,13 @@ public class Controller {
 		long timeRequest = endRequest.getTime() - initRequest.getTime();
 		System.out.println("response: " + response.code());
 
-		Item item = Repository.getInstance().get(id);
-		item.setType(type);
-		item.setSize(size);
-		item.setBytesSerialize(bytesSerialize);
-		item.setTimeSerialize(timeSerialize);
-		item.setTimeRequest(timeRequest);
-		Repository.getInstance().update(item);
+//		Item item = Repository.getInstance().get(id);
+//		item.setType(type);
+//		item.setSize(size);
+//		item.setBytesSerialize(bytesSerialize);
+//		item.setTimeSerialize(timeSerialize);
+//		item.setTimeRequest(timeRequest);
+//		Repository.getInstance().update(item);
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
