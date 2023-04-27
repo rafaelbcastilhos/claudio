@@ -6,7 +6,7 @@ import utils.DatasetSize;
 
 public class Main {
     public static void main(String[] args) {
-        Orders orders = new GenerateOrder().generate(DatasetSize.SMALL);
+        Orders orders = new GenerateOrder().generate(10);
 
         System.out.println("JSON");
         String jsonString = new Serializer().json(orders);

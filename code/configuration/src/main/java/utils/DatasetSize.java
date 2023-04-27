@@ -3,15 +3,12 @@ package utils;
 public class DatasetSize {
     public static int getSize(String input){
         if (input.equals("S"))
-            return SMALL;
+            return 1;
         if (input.equals("M"))
-            return MEDIUM;
+            return 100;
         if (input.equals("B"))
-            return BIG;
+            return 10000;
         else
             return 0;
     }
-    public static final int SMALL = 100, // 100 items no array
-            MEDIUM = 1000, // 1000 items no array
-            BIG = 100000; // 100000 items no array
 }

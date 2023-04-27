@@ -26,6 +26,7 @@ public class ClientApplication implements
 
         // Create an Orders object based on the "type" and "size" headers using DatasetType class
         Orders obj = new DatasetType().getType(type, size);
+        System.out.println("size: " + obj.getOrders().size());
 
         OkHttpClient ok = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
@@ -47,10 +48,11 @@ public class ClientApplication implements
         if (method.equals("MSGPACK") || method.equals("KRYO")){
             initSerialize = new Date();
             byte[] serialized = new DatasetMethod().serializeBytes(method, obj);
-            System.out.println("serialize: " + Arrays.toString(serialized));
             endSerialize = new Date();
             bytesSerialize = serialized.length;
-            requestBody = RequestBody.create(mediaType, serialized);
+            String base64Data = Base64.getEncoder().encodeToString(serialized);
+
+            requestBody = RequestBody.create(mediaType, base64Data);
         }
         Request requestClient = new Request.Builder()
                 .url(to)

@@ -26,7 +26,7 @@ public class LocalClient {
 
         for (Configuration configuration: configurationRequest()){
             // Loop que envia 10 requisições ao servidor
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 1; i++) {
                 // Cria um objeto Request com as informações necessárias
                 Request request = new Request.Builder()
                         .url(configuration.getFrom()) // URL do servidor
@@ -53,13 +53,15 @@ public class LocalClient {
         ArrayList<Configuration> list = new ArrayList<>();
         ArrayList<String> methods = new ArrayList<>();
 //        methods.add("JSON");methods.add("XML");
-//        methods.add("MSGPACK");
-        methods.add("KRYO");
+        methods.add("MSGPACK");
+//        methods.add("KRYO");
         ArrayList<String> types = new ArrayList<>();
-        types.add("STRUCT");types.add("STRING");types.add("CHAR");types.add("DOUBLE");types.add("INTEGER");types.add("BOOL");
+        types.add("STRUCT");
+//        types.add("STRING");types.add("CHAR");types.add("DOUBLE");types.add("INTEGER");types.add("BOOL");
         ArrayList<String> sizes = new ArrayList<>();
         sizes.add("S");
-//        sizes.add("M");sizes.add("B");
+        sizes.add("M");
+        sizes.add("B");
 
         for (String type : types) {
             for (String size : sizes) {
@@ -68,8 +70,8 @@ public class LocalClient {
                             type,
                             size,
                             method,
-                            "http://bvfntueu6e.execute-api.us-east-1.amazonaws.com/v1/client",
-                            "http://bvfntueu6e.execute-api.us-east-1.amazonaws.com/v1/server"
+                            "https://y0r12wthq0.execute-api.us-east-1.amazonaws.com/v1/client",
+                            "https://y0r12wthq0.execute-api.us-east-1.amazonaws.com/v1/server"
                     );
                     list.add(configuration);
                 }

@@ -9,6 +9,8 @@ import database.Repository;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.Headers;
+
+import java.util.Base64;
 import java.util.Date;
 
 public class ServerApplication implements
@@ -36,9 +38,9 @@ public class ServerApplication implements
         }
 
         if (method.equals("MSGPACK") || method.equals("KRYO")){
-            byte[] is = request.getBody().getBytes();
+            byte[] binaryData = Base64.getDecoder().decode(request.getBody().getBytes());
             initDeserialize = new Date();
-            deserialized = new DatasetMethod().deserializeBytes(method, is);
+            deserialized = new DatasetMethod().deserializeBytes(method, binaryData);
             endDeserialize = new Date();
         }
         // Calculate the time taken to deserialize
