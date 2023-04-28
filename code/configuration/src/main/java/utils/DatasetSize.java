@@ -1,13 +1,13 @@
 package utils;
 
 public class DatasetSize {
-    public static int getSize(String input){
-        if (input.equals("S"))
+    public int getSize(String input){
+        if (input.equals("1"))
             return 1;
-        if (input.equals("M"))
+        if (input.equals("100"))
             return 100;
-        if (input.equals("B"))
-            return 10000;
+        if (input.equals("1000"))
+            return 1000;
         else
             return 0;
     }

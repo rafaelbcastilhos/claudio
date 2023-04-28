@@ -34,7 +34,7 @@ Resources:
         - x86_64
       SnapStart:
         ApplyOn: PublishedVersions
-      FunctionName: postClient
+      FunctionName: client
       CodeUri: ../lambda-client/target/lambda-client-1.0.jar
       Handler: ufsc.tcc.cco.client.ClientApplication::handleRequest
       Events:
@@ -65,7 +65,7 @@ Resources:
         - x86_64
       SnapStart:
         ApplyOn: PublishedVersions
-      FunctionName: postServer
+      FunctionName: server
       CodeUri: ../lambda-server/target/lambda-server-1.0.jar
       Handler: ufsc.tcc.cco.server.ServerApplication::handleRequest
       Events:

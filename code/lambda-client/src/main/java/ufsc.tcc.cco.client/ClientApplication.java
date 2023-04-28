@@ -25,8 +25,8 @@ public class ClientApplication implements
         String id = UUID.randomUUID().toString();
 
         // Create an Orders object based on the "type" and "size" headers using DatasetType class
+        System.out.println("size header: " + size);
         Orders obj = new DatasetType().getType(type, size);
-        System.out.println("size: " + obj.getOrders().size());
 
         OkHttpClient ok = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
@@ -39,7 +39,6 @@ public class ClientApplication implements
         if (method.equals("JSON") || method.equals("XML")){
             initSerialize = new Date();
             String serialized = new DatasetMethod().serializeString(method, obj);
-            System.out.println("serialize: " + serialized);
             endSerialize = new Date();
             bytesSerialize = serialized.getBytes().length;
             requestBody = RequestBody.create(mediaType, serialized);

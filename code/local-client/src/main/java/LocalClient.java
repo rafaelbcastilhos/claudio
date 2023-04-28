@@ -8,13 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 public class LocalClient {
     public static void main(String[] args) throws InterruptedException, IOException {
-        // STRUCT S JSON localhost:8080
-        // Recebe os argumentos passados por linha de comando
-//        String type = args[0]; // tipo de dados para serem serializados
-//        String size = args[1]; // tamanho dos dados para serem serializados
-//        String method = args[2]; // método de serialização a ser utilizado
-//        String to = args[3]; // URL do servidor que receberá a requisição
-
         // Cria um cliente HTTP utilizando a biblioteca OkHttpClient
         OkHttpClient ok = new OkHttpClient();
         ok.setConnectTimeout(30, TimeUnit.SECONDS); // configura o timeout de conexão
@@ -52,16 +45,22 @@ public class LocalClient {
     public static ArrayList<Configuration> configurationRequest(){
         ArrayList<Configuration> list = new ArrayList<>();
         ArrayList<String> methods = new ArrayList<>();
-//        methods.add("JSON");methods.add("XML");
+//        methods.add("JSON");
+//        methods.add("XML");
         methods.add("MSGPACK");
 //        methods.add("KRYO");
         ArrayList<String> types = new ArrayList<>();
         types.add("STRUCT");
-//        types.add("STRING");types.add("CHAR");types.add("DOUBLE");types.add("INTEGER");types.add("BOOL");
+//        types.add("STRING");
+//        types.add("CHAR");
+//        types.add("DOUBLE");
+//        types.add("INTEGER");
+//        types.add("BOOL");
         ArrayList<String> sizes = new ArrayList<>();
-        sizes.add("S");
-        sizes.add("M");
-        sizes.add("B");
+        sizes.add("10");
+        sizes.add("100");
+        sizes.add("1000");
+        sizes.add("10000"); // nao funciona pra msgpack
 
         for (String type : types) {
             for (String size : sizes) {
@@ -70,8 +69,8 @@ public class LocalClient {
                             type,
                             size,
                             method,
-                            "https://y0r12wthq0.execute-api.us-east-1.amazonaws.com/v1/client",
-                            "https://y0r12wthq0.execute-api.us-east-1.amazonaws.com/v1/server"
+                            "https://zjp2xrftzb.execute-api.us-east-1.amazonaws.com/v1/client",
+                            "https://zjp2xrftzb.execute-api.us-east-1.amazonaws.com/v1/server"
                     );
                     list.add(configuration);
                 }

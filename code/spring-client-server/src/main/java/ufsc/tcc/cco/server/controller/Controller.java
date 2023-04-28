@@ -1,9 +1,6 @@
 package ufsc.tcc.cco.server.controller;
 
 import com.squareup.okhttp.*;
-import database.Item;
-import database.Repository;
-import model.Order;
 import model.Orders;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
