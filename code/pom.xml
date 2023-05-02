@@ -11,9 +11,9 @@
     <modules>
         <module>configuration</module>
         <module>local-client</module>
-<!--        <module>lambda-client</module>-->
-<!--        <module>spring-client-server</module>-->
-<!--        <module>lambda-client</module>-->
+        <module>lambda-client</module>
+        <module>lambda-server</module>
+        <module>spring-client-server</module>
     </modules>
 
     <properties>
@@ -109,7 +109,6 @@
                 <version>3.8.0</version>
                 <configuration>
                     <source>9</source>
-                    <source>1.8</source>
                     <target>9</target>
                 </configuration>
             </plugin>
