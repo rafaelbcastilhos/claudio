@@ -9,8 +9,8 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 public class DynamoDB {
     private static DynamoDbEnhancedClient INSTANCE_MAPPER;
     static AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-            "AKIA4AYSRE4ZHSIRLK53",
-            "IgM4D5uyuSxbXtpzlxaEh9jaUzgIcQL+6j0ct17S");
+            "AKIA4AYSRE4ZEVJAI2CP",
+            "ZA/3DXpyS8g2+zx5fUJWfjh2G2Yfqq6V4YyyK2mE");
 
     // DynamoDB Client builder
     private static final DynamoDbClient mapper = DynamoDbClient

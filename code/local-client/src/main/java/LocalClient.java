@@ -19,7 +19,7 @@ public class LocalClient {
 
         for (Configuration configuration: configurationRequest()){
             // Loop que envia 10 requisições ao servidor
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 100; i++) {
                 // Cria um objeto Request com as informações necessárias
                 Request request = new Request.Builder()
                         .url(configuration.getFrom()) // URL do servidor
@@ -45,22 +45,21 @@ public class LocalClient {
     public static ArrayList<Configuration> configurationRequest(){
         ArrayList<Configuration> list = new ArrayList<>();
         ArrayList<String> methods = new ArrayList<>();
-//        methods.add("JSON");
-//        methods.add("XML");
+        methods.add("JSON");
+        methods.add("XML");
         methods.add("MSGPACK");
-//        methods.add("KRYO");
+        methods.add("KRYO");
         ArrayList<String> types = new ArrayList<>();
         types.add("STRUCT");
-//        types.add("STRING");
-//        types.add("CHAR");
-//        types.add("DOUBLE");
-//        types.add("INTEGER");
-//        types.add("BOOL");
+        types.add("STRING");
+        types.add("CHAR");
+        types.add("DOUBLE");
+        types.add("INTEGER");
+        types.add("BOOL");
         ArrayList<String> sizes = new ArrayList<>();
-        sizes.add("10");
+        sizes.add("1");
         sizes.add("100");
         sizes.add("1000");
-        sizes.add("10000"); // nao funciona pra msgpack
 
         for (String type : types) {
             for (String size : sizes) {
@@ -70,7 +69,7 @@ public class LocalClient {
                             size,
                             method,
                             "https://zjp2xrftzb.execute-api.us-east-1.amazonaws.com/v1/client",
-                            "https://zjp2xrftzb.execute-api.us-east-1.amazonaws.com/v1/server"
+                            "https://smq3ejqzmb.execute-api.eu-central-1.amazonaws.com/v1/server"
                     );
                     list.add(configuration);
                 }

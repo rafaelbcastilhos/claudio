@@ -21,7 +21,7 @@ Resources:
         'Fn::Transform':
           Name: 'AWS::Include'
           Parameters:
-            Location: s3://ufsc-cco-tcc/deploy/api.json
+            Location: s3://ufsc-cco-tcc-us/deploy/api.json
       StageName: v1
       Variables:
         AwsId: !Ref AwsId

@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
+multi-file-swagger api.yml > api.json
 set -e
 
 echo "Enter region:"
 echo "0: us-east-1 (N. Virginia)"
-echo "1: us-east-2 (Ohio)"
-echo "2: eu-west-2 (London)"
-echo "3: ap-southeast-2 (Sydney)"
+echo "1: eu-central-1 (Frankfurt)"
 
 read opt
 
 if [ "$opt" -eq "0" ]; then
   REGION="us-east-1"
+  BUCKET="ufsc-cco-tcc-us"
 elif [ "$opt" -eq "1" ]; then
-  REGION="us-east-2"
-elif [ "$opt" -eq "2" ]; then
-  REGION="eu-west-2"
-elif [ "$opt" -eq "1" ]; then
-  REGION="ap-southeast-2"
+  REGION="eu-central-1"
+  BUCKET="ufsc-cco-tcc-eu"
 else
   echo "Argument region is required"
   exit 1
@@ -24,7 +21,6 @@ fi
 
 SERVICE="tcc"
 AWS_ID="826283206450"
-BUCKET="ufsc-cco-tcc"
 BUCKET_DEPLOY="deploy"
 
 echo -e "\nDeploy REST API to S3..."
