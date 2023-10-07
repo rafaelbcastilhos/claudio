@@ -60,7 +60,7 @@ public class Controller {
 				id,
 				method,
 				timeDeserialize,
-		        "EC2"
+		        "ECS"
 		));
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
