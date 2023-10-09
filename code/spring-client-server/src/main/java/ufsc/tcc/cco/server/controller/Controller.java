@@ -11,7 +11,6 @@ import utils.DatasetMethod;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
@@ -21,21 +20,21 @@ import utils.Headers;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-
-	// This method receives a POST request on "/server" endpoint and deserializes the request body based on the "method" header
+	//Este método recebe uma solicitação POST no endpoint "/server" e desserializa o corpo da solicitação com base no cabeçalho "method"
 	@RequestMapping(value = "/server", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> server(HttpServletRequest request) throws IOException {
 		String method = request.getHeader("method");
 		String id = request.getHeader("id");
 		System.out.println("method: " + method);
+		System.out.println("id: " + id);
 
 		String bodyString = null;
 		byte[] bodyBytes = null;
 		Date initDeserialize = null;
 		Date endDeserialize = null;
 		Orders deserialized = null;
-		// Deserialize the request body based on the "method" header using DatasetMethod class
+		// Desserializa o corpo da solicitação com base no cabeçalho "método" usando a classe DatasetMethod
 		if (method.equals("JSON") || method.equals("XML")){
 			bodyString = request.getReader().lines().reduce("",String::concat);
 			initDeserialize = new Date();
@@ -60,13 +59,13 @@ public class Controller {
 				id,
 				method,
 				timeDeserialize,
-		        "ECS"
+		        "SERVICE" // Substituir SERVICE pelo nome do serviço em que será avaliado
 		));
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
 
-	// This method receives a POST request on "/client" endpoint and serializes an Orders object based on the "method" header
+	// Este método recebe uma solicitação POST no endpoint "/client" e serializa um objeto Orders com base no cabeçalho "method"
 	@RequestMapping(value = "/client", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> client(HttpServletRequest request) throws IOException {
@@ -76,7 +75,7 @@ public class Controller {
 		String to = request.getHeader("to");
 		String id = UUID.randomUUID().toString();
 
-		// Create an Orders object based on the "type" and "size" headers using DatasetType class
+		// Cria um objeto Orders com base nos cabeçalhos "type" e "size" usando a classe DatasetType
 		Orders obj = new DatasetType().getType(type, size);
 
 		OkHttpClient ok = new OkHttpClient();
@@ -86,11 +85,10 @@ public class Controller {
 		Date endSerialize = null;
 		long bytesSerialize = 0;
 
-		// Serialize the Orders object based on the "method" header using DatasetMethod class
+		// Serializa o objeto Orders com base no cabeçalho "método" usando a classe DatasetMethod
 		if (method.equals("JSON") || method.equals("XML")){
 			initSerialize = new Date();
 			String serialized = new DatasetMethod().serializeString(method, obj).toString();
-			System.out.println("serialize: " + serialized);
 			endSerialize = new Date();
 			bytesSerialize = serialized.getBytes().length;
 			requestBody = RequestBody.create(mediaType, serialized);
@@ -99,7 +97,6 @@ public class Controller {
 		if (method.equals("MSGPACK") || method.equals("KRYO")){
 			initSerialize = new Date();
 			byte[] serialized = new DatasetMethod().serializeBytes(method, obj);
-			System.out.println("serialize: " + Arrays.toString(serialized));
 			endSerialize = new Date();
 			bytesSerialize = serialized.length;
 			requestBody = RequestBody.create(mediaType, serialized);
@@ -117,20 +114,24 @@ public class Controller {
 		Response response = ok.newCall(requestClient).execute();
 		Date endRequest = new Date();
 
-		// Calculate the time taken to serialize
+		// Calcula o tempo necessário para serializar
 		long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
 
-		// Calculate the time taken to request
+		// Calcula o tempo necessário da requisição
 		long timeRequest = endRequest.getTime() - initRequest.getTime();
 		System.out.println("response: " + response.code());
 
-		Item item = Repository.getInstance().get(id);
-		item.setType(type);
-		item.setSize(size);
-		item.setBytesSerialize(bytesSerialize);
-		item.setTimeSerialize(timeSerialize);
-		item.setTimeRequest(timeRequest);
-		Repository.getInstance().update(item);
+		Item item = Repository.get(id);
+		if (item != null){
+			item.setType(type);
+			item.setSize(size);
+			item.setBytesSerialize(bytesSerialize);
+			item.setTimeSerialize(timeSerialize);
+			item.setTimeRequest(timeRequest);
+			Repository.getInstance().update(item);
+		}
+		else
+			System.out.println("Item nulo");
 
 		return new ResponseEntity<>(new Headers().getHeaders(), HttpStatus.OK);
 	}
