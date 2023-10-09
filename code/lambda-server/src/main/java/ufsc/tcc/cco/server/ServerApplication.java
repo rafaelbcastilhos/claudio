@@ -9,7 +9,6 @@ import database.Repository;
 import model.Orders;
 import utils.DatasetMethod;
 import utils.Headers;
-
 import java.util.Base64;
 import java.util.Date;
 
@@ -29,7 +28,7 @@ public class ServerApplication implements
         Date endDeserialize = null;
         Orders deserialized = null;
 
-        // Deserialize the request body based on the "method" header using DatasetMethod class
+        // Desserializa o corpo da solicitação com base no cabeçalho "método" usando a classe DatasetMethod
         if (method.equals("JSON") || method.equals("XML")){
             bodyString = request.getBody();
             initDeserialize = new Date();
@@ -43,7 +42,7 @@ public class ServerApplication implements
             deserialized = new DatasetMethod().deserializeBytes(method, binaryData);
             endDeserialize = new Date();
         }
-        // Calculate the time taken to deserialize
+        // Calcula o tempo necessário para desserializar
         long timeDeserialize = endDeserialize.getTime() - initDeserialize.getTime();
 
         Repository.getInstance().create(new Item(

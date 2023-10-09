@@ -9,18 +9,20 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 public class DynamoDB {
     private static DynamoDbEnhancedClient INSTANCE_MAPPER;
     static AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-            "AKIA4AYSRE4ZEVJAI2CP",
-            "ZA/3DXpyS8g2+zx5fUJWfjh2G2Yfqq6V4YyyK2mE");
+            "ACCESS_KEY",
+            "SECRET_KEY");
 
-    // DynamoDB Client builder
+    // DynamoDB Client construtor
     private static final DynamoDbClient mapper = DynamoDbClient
             .builder()
-            .region(Region.US_EAST_1)
             .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+            .region(Region.US_EAST_1)
             .build();
 
-    // Singleton implementation of DynamoDbEnhancedClient.
+    // Singleton da classe DynamoDbEnhancedClient.
     public static DynamoDbEnhancedClient getInstanceDynamoDb() {
+        System.out.println(awsCreds.accessKeyId());
+        System.out.println(awsCreds.secretAccessKey());
         if(INSTANCE_MAPPER == null)
             INSTANCE_MAPPER = DynamoDbEnhancedClient.builder()
                     .dynamoDbClient(mapper)

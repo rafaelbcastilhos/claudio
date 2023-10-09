@@ -28,7 +28,7 @@ public final class Repository {
     }
 
     // Captura item.
-    public Item get(String id){
+    public static Item get(String id){
         Key key = Key.builder()
                 .partitionValue(id)
                 .build();

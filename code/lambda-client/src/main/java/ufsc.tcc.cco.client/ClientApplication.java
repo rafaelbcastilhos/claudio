@@ -24,7 +24,7 @@ public class ClientApplication implements
         String to = request.getHeaders().get("to");
         String id = UUID.randomUUID().toString();
 
-        // Create an Orders object based on the "type" and "size" headers using DatasetType class
+        // Cria um objeto Orders com base nos cabeçalhos "type" e "size" usando a classe DatasetType
         System.out.println("size header: " + size);
         Orders obj = new DatasetType().getType(type, size);
 
@@ -35,7 +35,7 @@ public class ClientApplication implements
         Date endSerialize = null;
         long bytesSerialize = 0;
 
-        // Serialize the Orders object based on the "method" header using DatasetMethod class
+        // Serializa o objeto Orders com base no cabeçalho "método" usando a classe DatasetMethod
         if (method.equals("JSON") || method.equals("XML")){
             initSerialize = new Date();
             String serialized = new DatasetMethod().serializeString(method, obj);
@@ -72,10 +72,10 @@ public class ClientApplication implements
         }
         Date endRequest = new Date();
 
-        // Calculate the time taken to serialize
+        // Calcul o tempo necessário para serializar
         long timeSerialize = endSerialize.getTime() - initSerialize.getTime();
 
-        // Calculate the time taken to request
+        // Calcula o tempo necessário para requisição
         long timeRequest = endRequest.getTime() - initRequest.getTime();
         System.out.println("response: " + response.code());
 

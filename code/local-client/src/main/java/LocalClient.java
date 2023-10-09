@@ -10,7 +10,7 @@ public class LocalClient {
     public static void main(String[] args) throws InterruptedException, IOException {
         // Cria um cliente HTTP utilizando a biblioteca OkHttpClient
         OkHttpClient ok = new OkHttpClient();
-        ok.setConnectTimeout(30, TimeUnit.SECONDS); // configura o timeout de conexão
+        ok.setConnectTimeout(30, TimeUnit.SECONDS); // configur a o timeout de conexão
         ok.setWriteTimeout(30, TimeUnit.SECONDS); // configura o timeout de escrita
         ok.setReadTimeout(30, TimeUnit.SECONDS); // configura o timeout de leitura
 
@@ -68,8 +68,8 @@ public class LocalClient {
                             type,
                             size,
                             method,
-                            "https://zjp2xrftzb.execute-api.us-east-1.amazonaws.com/v1/client",
-                            "https://smq3ejqzmb.execute-api.eu-central-1.amazonaws.com/v1/server"
+                            "http://address_client/client", // Substituir address_client pelo IP ou endereço do cliente
+                            "http://address_server/server" // Substituir address_server pelo IP ou endereço do servidor
                     );
                     list.add(configuration);
                 }
