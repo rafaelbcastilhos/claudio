@@ -5,4 +5,4 @@ sudo mvn clean package dockerfile:push
 ```
 
 Docker image:
-- https://hub.docker.com/repository/docker/rafaelbcastilhos/spring-ecs/general
+- https://hub.docker.com/repository/docker/rafaelbcastilhos/ecs
