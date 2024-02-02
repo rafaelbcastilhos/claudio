@@ -1,23 +1,19 @@
 import repository
 import statistics
 
+methods = ["XML", "JSON", "MSGPACK", "KRYO"]
+sizes = ["1", "100", "1000"]
+services = ["EC2", "ECS", "LAMBDA"]
+types = ["STRUCT", "STRING", "CHAR", "DOUBLE", "INTEGER", "BOOL"]
 
-json = repository.get_method_size("JSON", "S")
-#xml = repository.get_method_size("XML", "B")
-#msgpack = repository.get_method_size("MSGPACK", "S")
-#kryo = repository.get_service_size("EC2", "B")
+for m in methods:
+    for s in sizes:
+        method_size = repository.get_method_size(m, s)
 
-j_request = []
-j_serialize = [] 
-j_deserialize = []
-sum_deserialize = 0
-for j in json:
-    sum_deserialize = sum_deserialize + j['timeDeserialize']
-    j_request.append(j['timeRequest'])
-    j_serialize.append(j['timeSerialize'])
-    j_deserialize.append(j['timeDeserialize'])
+for m in methods:
+    for s in services:
+        method_service_all = repository.get_method_service(m, s)
 
-#print(f"request: {(j_request)}")
-#   print(f"serialize: {j_serialize}")
-print(f"deserialize: {sum_deserialize / len(j_deserialize)}")
-
+for m in methods:
+    for t in types:
+        method_service_all = repository.get_method_service(m, t)
