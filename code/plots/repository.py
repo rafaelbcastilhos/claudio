@@ -1,8 +1,8 @@
+from resume import Resume
 import json
 import os
 import boto3
 import statistics
-from boto3.dynamodb.conditions import Attr
 
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("item")
@@ -19,8 +19,7 @@ def scan():
     return items
 
 
-def get_method_size(method, size):
-    response = scan()
+def get_method_size(method, size, response):
     request = []
     serialize = [] 
     deserialize = []
@@ -31,10 +30,16 @@ def get_method_size(method, size):
             request.append(int(i['timeRequest']))
             serialize.append(int(i['timeSerialize']))
             deserialize.append(int(i['timeDeserialize']))
-    array_mean(bytes_serialize, request, serialize, deserialize)
+    return Resume(method,
+        None,
+        None,
+        size,
+        statistics.mean(bytes_serialize),
+        statistics.mean(request),
+        statistics.mean(serialize),
+        statistics.mean(deserialize))
 
-def get_method_service(method, service):
-    response = scan()
+def get_method_service(method, service, response):
     request = []
     serialize = [] 
     deserialize = []
@@ -45,10 +50,16 @@ def get_method_service(method, service):
             request.append(int(i['timeRequest']))
             serialize.append(int(i['timeSerialize']))
             deserialize.append(int(i['timeDeserialize']))
-    array_mean(bytes_serialize, request, serialize, deserialize)
+    return Resume(method,
+        service,
+        None,
+        None,
+        statistics.mean(bytes_serialize),
+        statistics.mean(request),
+        statistics.mean(serialize),
+        statistics.mean(deserialize))
 
-def get_method_type(method, typeData):
-    response = scan()
+def get_method_type(method, typeData, response):
     request = []
     serialize = [] 
     deserialize = []
@@ -59,10 +70,11 @@ def get_method_type(method, typeData):
             request.append(int(i['timeRequest']))
             serialize.append(int(i['timeSerialize']))
             deserialize.append(int(i['timeDeserialize']))
-    array_mean(bytes_serialize, request, serialize, deserialize)
-
-def array_mean(bytes_serialize, request, serialize, deserialize):
-    print(f"bytesSerialize: {statistics.mean(bytes_serialize)}")
-    print(f"timeRequest: {statistics.mean(request)}")
-    print(f"timeSerialize: {statistics.mean(serialize)}")
-    print(f"timeDeserialize: {statistics.mean(deserialize)}")
+    return Resume(method,
+        None,
+        typeData,
+        None,
+        statistics.mean(bytes_serialize),
+        statistics.mean(request),
+        statistics.mean(serialize),
+        statistics.mean(deserialize))
