@@ -48,12 +48,13 @@ def method_service():
         for s in services:
             print(f"{m} - {s}")
             method_service.append(repository.get_method_service(m, s, response))
+
     for s in services:
         values_bytes_serialize.clear()
         values_request.clear()
         values_serialize.clear()
         values_deserialize.clear()
-        categories.clear()
+        categories.clear()  
         for ms in method_service:
             if ms.service == s:
                 categories.append(ms.method)
@@ -61,6 +62,7 @@ def method_service():
                 values_request.append(ms.request)
                 values_serialize.append(ms.serialize)
                 values_deserialize.append(ms.deserialize)
+
         plot.method_service(categories, values_bytes_serialize, s, "Quantidade média de bytes serializados")
         plot.method_service(categories, values_request, s, "Tempo médio da requisição (ms)")
         plot.method_service(categories, values_serialize, s, "Tempo médio de serialização")
