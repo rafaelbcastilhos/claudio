@@ -22,8 +22,6 @@ def method_size(categories, values, size, ylabel):
 
 
 def method_service(categories, values, service, ylabel):
-    print(categories)
-    print(values)
     plt.bar(categories, values, color='gray')
     plt.gca().spines['top'].set_visible(False)
     plt.gca().spines['right'].set_visible(False)

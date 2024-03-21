@@ -34,8 +34,8 @@ def method_size():
                 values_deserialize.append(ms.deserialize)
         plot.method_size(categories, values_bytes_serialize, s, "Quantidade média de bytes serializados")
         plot.method_size(categories, values_request, s, "Tempo médio da requisição (ms)")
-        plot.method_size(categories, values_serialize, s, "Tempo médio de serialização")
-        plot.method_size(categories, values_deserialize, s, "Tempo médio de deserialização")
+        plot.method_size(categories, values_serialize, s, "Tempo médio de serialização (ms)")
+        plot.method_size(categories, values_deserialize, s, "Tempo médio de deserialização (ms)")
 
 def method_service():
     method_service = []
@@ -65,8 +65,8 @@ def method_service():
 
         plot.method_service(categories, values_bytes_serialize, s, "Quantidade média de bytes serializados")
         plot.method_service(categories, values_request, s, "Tempo médio da requisição (ms)")
-        plot.method_service(categories, values_serialize, s, "Tempo médio de serialização")
-        plot.method_service(categories, values_deserialize, s, "Tempo médio de deserialização")
+        plot.method_service(categories, values_serialize, s, "Tempo médio de serialização (ms)")
+        plot.method_service(categories, values_deserialize, s, "Tempo médio de deserialização (ms)")
 
 def method_type():
     method_type = []
@@ -96,5 +96,5 @@ def method_type():
 
         plot.method_type(categories, values_bytes_serialize, t, "Quantidade média de bytes serializados")
         plot.method_type(categories, values_request, t, "Tempo médio da requisição (ms)")
-        plot.method_type(categories, values_serialize, t, "Tempo médio de serialização")
-        plot.method_type(categories, values_deserialize, t, "Tempo médio de deserialização")
+        plot.method_type(categories, values_serialize, t, "Tempo médio de serialização (ms)")
+        plot.method_type(categories, values_deserialize, t, "Tempo médio de deserialização (ms)")
