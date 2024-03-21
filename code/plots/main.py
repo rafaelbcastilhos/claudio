@@ -1,5 +1,5 @@
 import service
 
-# service.method_size()
+service.method_size()
 service.method_service()
-# service.method_type()
+service.method_type()
