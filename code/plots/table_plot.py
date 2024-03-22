@@ -84,7 +84,7 @@ def request_time_services():
     plt.gca().tick_params(axis='y', colors='k')
 
     plt.xlabel('Serviço')
-    plt.ylabel('Tempo médio total da requisição')
+    plt.ylabel('Tempo médio total da requisição (ms)')
     plt.xticks([i + 1.5 * bar_width for i in index], services)
     plt.legend(loc='upper left', ncol=2)
 
@@ -114,7 +114,7 @@ def request_time_services():
     plt.gca().tick_params(axis='y', colors='k')
 
     plt.xlabel('Serviço')
-    plt.ylabel('Tempo médio total da requisição')
+    plt.ylabel('Tempo médio total da requisição (ms)')
     plt.xticks([i + 1.5 * bar_width for i in index], services)
     plt.legend(loc='upper left', ncol=2)
 

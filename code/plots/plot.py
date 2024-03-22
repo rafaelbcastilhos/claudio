@@ -9,7 +9,6 @@ def method_size(categories, values, size, ylabel):
     plt.gca().tick_params(axis='x', colors='k')
     plt.gca().tick_params(axis='y', colors='k') 
 
-    # Adicionando rótulos e título
     plt.xlabel('Formato dos dados')
     plt.ylabel(ylabel)
     plt.title(f'Gráfico de Barras para tamanho {size}')
@@ -28,8 +27,6 @@ def method_service(categories, values, service, ylabel):
 
     plt.gca().tick_params(axis='x', colors='k')
     plt.gca().tick_params(axis='y', colors='k')
-
-    # Adicionando rótulos e título
 
     plt.xlabel('Formato dos dados')
     plt.ylabel(ylabel)
@@ -50,7 +47,6 @@ def method_type(categories, values, typeData, ylabel):
     plt.gca().tick_params(axis='x', colors='k')
     plt.gca().tick_params(axis='y', colors='k')
 
-    # Adicionando rótulos e título
     plt.xlabel('Formato dos dados')
     plt.ylabel(ylabel)
     plt.title(f'Gráfico de Barras para a formatação do tipo {typeData}')
