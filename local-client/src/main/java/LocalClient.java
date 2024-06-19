@@ -18,7 +18,7 @@ public class LocalClient {
         RequestBody reqbody = RequestBody.create(null, new byte[0]);
 
         for (Configuration configuration: configurationRequest()){
-            // Loop que envia 10 requisições ao servidor
+            // Loop que envia 100 requisições ao servidor
             for (int i = 0; i < 100; i++) {
                 // Cria um objeto Request com as informações necessárias
                 Request request = new Request.Builder()

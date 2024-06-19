@@ -43,7 +43,6 @@ public class Controller {
 		}
 
 		if (method.equals("MSGPACK") || method.equals("KRYO")){
-			System.out.println("entrei bytes");
 			InputStream is = request.getInputStream();
 			bodyBytes = is.readAllBytes();
 			initDeserialize = new Date();

@@ -21,8 +21,6 @@ public class DynamoDB {
 
     // Singleton da classe DynamoDbEnhancedClient.
     public static DynamoDbEnhancedClient getInstanceDynamoDb() {
-        System.out.println(awsCreds.accessKeyId());
-        System.out.println(awsCreds.secretAccessKey());
         if(INSTANCE_MAPPER == null)
             INSTANCE_MAPPER = DynamoDbEnhancedClient.builder()
                     .dynamoDbClient(mapper)
